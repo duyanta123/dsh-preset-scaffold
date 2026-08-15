@@ -1,0 +1,48 @@
+{
+  "name": "dsh-preset-scaffold",
+  "version": "0.1.1",
+  "description": "DSH (DeepSeek Harness) scaffold plugin & preset: strict 5-phase init runbook, engineering standards, and six runnable starter templates (node-ts / react-vite / python / go / spring-boot / monorepo). 项目初始化脚手架预设：严格流程 + 工程规范 + 六套模板。",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "main": "./plugin/index.js",
+  "exports": {
+    ".": "./plugin/index.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "plugin/index.js",
+    "cordis.patch.yml",
+    "skills/",
+    "templates/",
+    "preset.yml",
+    "agent.cordis.yml",
+    "install.ps1",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/dsh-skill-filesystem": "*"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-skill-filesystem": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "scaffolding",
+    "skills",
+    "templates",
+    "project-init",
+    "agent"
+  ]
+}

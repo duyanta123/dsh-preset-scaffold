@@ -1,2 +1,2 @@
 name: 项目初始化脚手架
-description: 项目架构师：从零搭建标准化、可运行、可验证的项目骨架——内置 node-ts / react-vite 模板资产、严格初始化流程、结构与配置规范、联网版本查证。
+description: 项目架构师：从零搭建标准化、可运行、可验证的项目骨架——内置 node-ts / react-vite / python / go / spring-boot / monorepo 六套 starter 模板、严格五阶段初始化流程、结构与配置规范、联网版本查证。 / Project architect preset: strict 5-phase init runbook, engineering standards, and six runnable starter templates (node-ts, react-vite, python, go, spring-boot, monorepo) with web-verified dependency versions.

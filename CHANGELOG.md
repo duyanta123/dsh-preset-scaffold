@@ -2,6 +2,10 @@
 
 本文件记录 dsh-preset-scaffold 的重要变更。
 
+## [0.1.1] - 2026-08-15
+- 新增插件 bundle 形态：`dsh plugin --profile web add github:duyanta123/dsh-preset-scaffold` 一键安装（package.json + cordis.patch.yml + plugin/index.js），skills 经官方 `FileSystemSkillProvider` 注册，可入 dsh-index 生态
+- preset.yml 描述对齐实际六套模板，补充英文描述；README 安装节补充插件安装方式
+
 ## [0.1.0] - 2026-08-15
 - 初始版本：项目架构师人设 + 严格初始化流程（scaffold-runbook）
 - 六套模板资产：node-ts、react-vite、python(FastAPI)、go、spring-boot、monorepo

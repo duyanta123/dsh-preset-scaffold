@@ -13,6 +13,18 @@
 
 ## 安装（DSH 用户）
 
+### 方式一：作为插件安装（推荐，可入 dsh-index 生态）
+
+四个工程化 skills（runbook / 模板 / 结构 / 配置规范）随包注册，人设与工具沿用宿主 profile（web / standard 已覆盖 runbook 引用的全部工具）：
+
+```powershell
+dsh plugin --profile web add github:duyanta123/dsh-preset-scaffold
+```
+
+安装后新建会话即可用；模板资产随包分发，`scaffold-templates` 技能可直接读取。
+
+### 方式二：作为完整预设安装（含架构师人设）
+
 预设 = 一个目录，安装即复制，**无需改任何宿主配置**：
 
 ```powershell
