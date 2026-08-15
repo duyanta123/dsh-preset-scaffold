@@ -43,6 +43,7 @@ description: 项目脚手架严格初始化流程：需求确认 → 方案 → 
 - 模板的 build/typecheck/start 等运行期命令不受此限制。
 - pnpm 11 默认阻止生命周期脚本：在 pnpm-workspace.yaml 加 `allowBuilds: { esbuild: true }`（或按需列出其他包）放行。
 - 本机没有 pnpm 时：`corepack enable` 后 `corepack prepare pnpm@latest --activate`，或 `npm install -g pnpm`。
+- workdir 必须指向已存在的目录：先创建目标目录再将其作为 workdir，或省略 workdir、在命令内先建目录再 `Set-Location`/`cd`；否则 spawn 阶段即失败，报误导性的 `ENOENT`（错误消息显示 powershell.exe，实际是 cwd 不存在），且命令体不会执行。
 
 ## 例外与裁剪
 - 极简脚本/单文件工具可跳过模板与计划模式，但验证门槛不豁免。
