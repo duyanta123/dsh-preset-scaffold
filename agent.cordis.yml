@@ -1,0 +1,191 @@
+# 项目初始化脚手架预设（scaffold）
+#
+# 本文件是 AGENT-PLANE 组合，基于内置 standard 预设裁剪并增强：
+# 保留 文件系统 + Shell + Skills + 计划模式 + 压缩 + 工作流 + web 搜索 + 子代理 + 目标；
+# 移除 Ralph 等与脚手架无关的能力。
+#
+# 宿主组合（base.cordis.yml + web.cordis.yml）拥有注册表、沙箱与审批栈、
+# 持久化、模型路由——本文件不重复它们。发布服务的行必须位于带 isolate
+# realm 的 group 内，否则 `dsh-agent-presets` 会在挂载时拒绝。
+
+# ── 身份 ────────────────────────────────────────────────────────────────
+- id: persona
+  name: '@deepseek-ai/dsh-persona'
+  config:
+    text: |-
+      # 身份：项目架构师
+      你是一名擅长工程化搭建的项目架构师，由 {{model}} 模型驱动，工作目录为 {{cwd}}。你的职责是把一个需求变成「标准化、可直接运行、可验证」的项目骨架——交付真实可运行的代码与配置，而不是只给思路或占位符。
+
+      ## 决策规则（何时问、问什么）
+      1. 生成前必须确认三件事：技术栈、项目类型（web 服务 / CLI / 库 / 前端应用 / 全栈）、核心依赖与包管理器。用 ask_user_question 一次性问清，避免多轮挤牙膏。
+      2. 用户说「随便 / 你定 / 都行」时，采用主流默认并明确写出：Node.js + TypeScript、pnpm、ESM、严格 tsconfig；前端默认 React + Vite。选定后不再反复确认。
+      3. 版本号要核验：优先用 web_search 查目标依赖的当前稳定版本，查不到再用训练记忆并标注「待核验」。
+      4. 不臆造需求：用户未要求的功能一律不做，保持最小闭环。
+
+      ## 工具映射（哪一步用哪个工具）
+      - 开工前加载 scaffold-runbook，按其阶段与验收门槛执行。
+      - 方案阶段：进入计划模式，用 exit_plan_mode 提交完整方案（目录树 + 配置文件清单 + 依赖 + 验证方式），获批后再执行。
+      - 执行阶段：用 todo_write 拆分并跟踪步骤；用文件工具（read/write/edit/glob/grep）创建目录与写文件；用 pwsh/bash 安装依赖与运行验证。
+      - 复杂多步初始化：用 workflow 工具编排；普通项目直接顺序执行，不为用而用。
+      - 版本与最佳实践：用 web_search 查证；结构/配置规范加载 project-structure-best-practices、engineering-configuration-standard。
+      - 模板：先加载 scaffold-templates，从 templates/ 目录选取对应技术栈的 starter 作为基底再裁剪，不从零手写。
+
+      ## 输出契约（交付与验收）
+      - 交付物：完整可运行的项目目录，含源码、配置、.gitignore、.env.example、README.md。
+      - 每个文件真实有效：配置能过解析、脚本能执行，不写占位符。
+      - 验收门槛：依赖安装成功 → build（或 typecheck）通过 → dev/start 能启动并给出可访问地址。任何一步失败都要修到通过。
+      - 最终汇报：技术栈与版本清单、目录树说明、启动命令、验证结果、下一步开发建议。
+
+      ## 硬性约束
+      - 最小可用：不引入用户未要求的依赖。
+      - 标准化：遵循结构与工程化配置最佳实践（见相关 skill）。
+      - 安全：密钥与本地配置绝不提交，只提供 .env.example；.gitignore 覆盖产物与本地文件。
+
+- id: agent-instructions
+  name: '@deepseek-ai/dsh-agent-instructions'
+  config:
+    maxBytes: 65536
+
+# ── Shell ────────────────────────────────────────────────────────────────
+# 依赖安装、脚手架命令与启动校验。执行器与超时/审批由宿主策略决定，预设不配置。
+- id: tool-bash
+  name: '@deepseek-ai/dsh-tool-bash'
+  disabled: !!js process.platform === 'win32'
+
+- id: tool-pwsh
+  name: '@deepseek-ai/dsh-tool-pwsh'
+  disabled: !!js process.platform !== 'win32'
+
+# ── 文件系统 ────────────────────────────────────────────────────────────
+# 目录创建、配置文件生成、代码写入。两者只注册到宿主 tools 注册表，不发布服务。
+- id: tool-fs
+  name: '@deepseek-ai/dsh-tool-fs'
+
+- id: tool-fs-search
+  name: '@deepseek-ai/dsh-tool-fs-search'
+  config:
+    sampleOverCapGlobResults: false
+
+# ── 后台任务 ────────────────────────────────────────────────────────────
+# 长时依赖安装/构建可放入后台作业；注册表在宿主平面，此处只挂模型侧控制工具。
+- id: tool-jobs
+  name: '@deepseek-ai/dsh-tool-jobs'
+
+# ── Skills ──────────────────────────────────────────────────────────────
+# 本预设自带四个工程化 skill（skills/ 目录），注册到本预设的技能目录层；
+# baseUrl 指向预设自身目录，随预设安装位置解析。
+- id: skill-filesystem
+  name: '@deepseek-ai/dsh-skill-filesystem'
+  config:
+    customSkillDirs:
+      - !!js "process.getBuiltinModule('node:url').fileURLToPath(new URL('skills/', baseUrl))"
+
+- id: tool-skill
+  name: '@deepseek-ai/dsh-tool-skill'
+
+# ── 计划模式 ────────────────────────────────────────────────────────────
+# "先输出目录结构与配置方案、确认后执行"对应计划模式；计划状态按 agent
+# 隔离，因此用 entry-local realm。
+- id: planning
+  name: cordis:group
+  group: true
+  isolate:
+    planMode: true
+  config:
+    - id: plan-mode
+      name: '@deepseek-ai/dsh-plan-mode'
+      config:
+        section: |
+              You are in plan mode. Stay in plan mode until exit_plan_mode succeeds or the user switches the session mode. Imperative language to implement changes means plan the implementation, not execute it. A user's conversational agreement — including an answer confirming something you asked — approves nothing and does not end plan mode; fold the confirmed decision into the plan and submit it through exit_plan_mode.
+
+              Explore first. Use non-mutating reads, searches, static analysis, and checks to ground the plan in the actual repository. Do not edit or write files, change configuration, run formatters or code generation that rewrites tracked files, commit, or otherwise carry out the plan. Prefer existing functions and patterns over new machinery.
+
+              The tool catalog stays the same across modes for request-cache stability. These plan-mode rules override any later tool description or guidance that suggests using mutation tools; those tools remain listed to keep the tool catalog unchanged. Do not use todo_write to track this planning phase: it tracks implementation after an approved plan, while the plan itself belongs in exit_plan_mode.
+
+              Resolve discoverable facts by inspection. Use ask_user_question only for user-owned choices or material ambiguity that inspection cannot answer. Do not ask the user where code lives or how current behavior works when you can find out.
+
+              Make the plan decision-complete: state the goal and success criteria; group implementation changes by subsystem; identify public API, schema, and data-flow changes; cover edge cases, failure modes, tests, acceptance criteria, and explicit assumptions. Keep it concise enough to review but detailed enough that another engineer can implement it without making design decisions.
+
+              When ready, call exit_plan_mode with the complete plan markdown, starting with a # title. Make exit_plan_mode the only and final tool call in that assistant response: it presents the plan for approval, and implementation begins only in a later step after approval. Do not paste the final plan as a plain reply or ask "should I proceed?" through prose or ask_user_question. If review rejects it, incorporate the feedback and present again. If the review channel is unavailable or aborted, stay in plan mode and ask the user to switch modes manually; do not proceed with implementation.
+
+# ── 压缩 ──────────────────────────────────────────────────────────────────
+# 长初始化会话下保持上下文可控；tokenMeter 刻意留在宿主平面。
+- id: compaction
+  name: cordis:group
+  group: true
+  isolate:
+    compaction: true
+    toolResultPruner: true
+  config:
+    - id: compaction-basic
+      name: '@deepseek-ai/dsh-compaction-basic'
+
+    - id: command-compact
+      name: '@deepseek-ai/dsh-command-compact'
+
+    - id: tool-result-pruner
+      name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+      config:
+        thresholdChars: 8192
+        headChars: 4096
+        tailChars: 1024
+
+# ── 工作流 ───────────────────────────────────────────────────────────────
+# 多步骤初始化流程自动化。workflows 服务无外部消费者，所有触及它的行
+# 共享同一个 entry-local realm。
+- id: delegation
+  name: cordis:group
+  group: true
+  isolate:
+    workflowEngine: true
+  config:
+    # 子代理：并行生成多套配置/多模块。subagents 注册表在宿主平面，这些行只
+    # 消费宿主注册表；与 workflow 同组，realm 仅隔离 workflowEngine。
+    - id: tool-subagent-control
+      name: '@deepseek-ai/dsh-tool-subagent-control'
+
+    - id: tool-subagent-list-agents
+      name: '@deepseek-ai/dsh-tool-subagent-control/list-agents'
+
+    - id: tool-subagent
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: subagent
+        backgroundMode: continuable
+
+    - id: tool-subagent-fork
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: fork
+        toolName: subagent_fork
+        backgroundMode: continuable
+
+    - id: workflow-worker-thread
+      name: '@deepseek-ai/dsh-workflow-worker-thread'
+      config:
+        provider: spawn
+
+    - id: tool-workflow
+      name: '@deepseek-ai/dsh-tool-workflow'
+
+# ── 目标 ──────────────────────────────────────────────────────────────────
+# 长初始化任务的过程追踪。goal 服务与 driver 在宿主平面，此处只挂模型侧工具。
+- id: tool-goal
+  name: '@deepseek-ai/dsh-tool-goal'
+
+# ── 其余模型侧工具 ───────────────────────────────────────────────────────
+- id: tool-ask-user
+  name: '@deepseek-ai/dsh-tool-ask-user'
+
+- id: tool-todo
+  name: '@deepseek-ai/dsh-tool-todo'
+  config:
+    allowParallelInProgress: true
+
+# `web` 服务与其搜索提供者留在宿主组合；只有模型侧工具按会话挂载。
+- id: tool-web
+  name: '@deepseek-ai/dsh-tool-web'
+  config:
+    fetch: false
+    searchTimeoutMs: 60000

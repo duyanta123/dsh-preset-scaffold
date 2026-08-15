@@ -1,0 +1,9 @@
+{
+  "name": "my-monorepo",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev:api": "pnpm --filter @my/api dev",
+    "dev:web": "pnpm --filter @my/web dev"
+  }
+}
