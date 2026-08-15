@@ -41,6 +41,8 @@ description: 项目脚手架严格初始化流程：需求确认 → 方案 → 
 - 包缓存放进工作区：npm 用 `--cache .npm-cache`，pnpm 用 `--store-dir .pnpm-store`，避免缓存目录在工作区外被沙箱拦截（否则 npm 写缓存/日志失败）。
 - 生命周期脚本（esbuild postinstall、node-gyp 等）在 workspace-write 下会因沙箱限制子进程管道报 `EPERM / spawn` 失败：把安装命令以 sandbox_permissions（danger-full-access）升级重试（会向用户弹审批），并说明原因。
 - 模板的 build/typecheck/start 等运行期命令不受此限制。
+- pnpm 11 默认阻止生命周期脚本：在 pnpm-workspace.yaml 加 `allowBuilds: { esbuild: true }`（或按需列出其他包）放行。
+- 本机没有 pnpm 时：`corepack enable` 后 `corepack prepare pnpm@latest --activate`，或 `npm install -g pnpm`。
 
 ## 例外与裁剪
 - 极简脚本/单文件工具可跳过模板与计划模式，但验证门槛不豁免。
