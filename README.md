@@ -1,5 +1,7 @@
 # dsh-preset-scaffold · 项目初始化脚手架预设
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-agent%20preset-4c1d95)](#)
+
 一个面向「从零搭建项目骨架」的 DeepSeek Harness（DSH）Agent 预设：内置架构师人设、严格初始化流程、分技术栈模板资产与工程化规范。
 
 ## 功能
