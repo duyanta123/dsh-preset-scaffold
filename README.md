@@ -15,7 +15,7 @@
 
 ```powershell
 # 1. 克隆本仓库
-git clone https://github.com/<your-name>/dsh-preset-scaffold
+git clone https://github.com/duyanta123/dsh-preset-scaffold.git
 # 2. 复制到 DSH 的用户预设根目录
 Copy-Item -Recurse .\dsh-preset-scaffold "$env:USERPROFILE\.dsh\.agent-presets\scaffold"
 # 3. 新建会话，预设选择「项目初始化脚手架」
