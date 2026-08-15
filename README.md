@@ -41,3 +41,7 @@ Copy-Item -Recurse .\dsh-preset-scaffold "$env:USERPROFILE\.dsh\.agent-presets\s
 - 加技能：新建 `skills/<name>/SKILL.md`，YAML frontmatter 需含 `name` 与 `description`。
 - 加/减能力：编辑 `agent.cordis.yml` 的插件行（参考内置 `standard` 预设）。
 - 校验：用 `agentPresets.standingKeyFor('scaffold')` 做挂载校验；改完建议新建会话实跑一遍。
+
+## License
+
+MIT © duyanta123
