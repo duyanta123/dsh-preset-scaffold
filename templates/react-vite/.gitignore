@@ -1,4 +1,6 @@
 node_modules/
+.npm-cache/
+.pnpm-store/
 dist/
 .env
 .env.local

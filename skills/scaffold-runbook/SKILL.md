@@ -37,6 +37,11 @@ description: 项目脚手架严格初始化流程：需求确认 → 方案 → 
 - 汇报：技术栈与版本清单、目录树、启动命令、验证结果、下一步建议。
 - 确认 README 与实际 scripts 一致；.gitignore 覆盖产物与本地文件；密钥不进仓库。
 
+## 沙箱与依赖安装（环境约束）
+- 包缓存放进工作区：npm 用 `--cache .npm-cache`，pnpm 用 `--store-dir .pnpm-store`，避免缓存目录在工作区外被沙箱拦截（否则 npm 写缓存/日志失败）。
+- 生命周期脚本（esbuild postinstall、node-gyp 等）在 workspace-write 下会因沙箱限制子进程管道报 `EPERM / spawn` 失败：把安装命令以 sandbox_permissions（danger-full-access）升级重试（会向用户弹审批），并说明原因。
+- 模板的 build/typecheck/start 等运行期命令不受此限制。
+
 ## 例外与裁剪
 - 极简脚本/单文件工具可跳过模板与计划模式，但验证门槛不豁免。
 - 用户明确要求"不用计划/直接干"时，跳过阶段 1，但阶段 0 与阶段 3 不豁免。
