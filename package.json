@@ -5,6 +5,14 @@
   "license": "MIT",
   "type": "module",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duyanta123/dsh-preset-scaffold.git"
+  },
+  "bugs": {
+    "url": "https://github.com/duyanta123/dsh-preset-scaffold/issues"
+  },
+  "homepage": "https://github.com/duyanta123/dsh-preset-scaffold#readme",
   "main": "./plugin/index.js",
   "exports": {
     ".": "./plugin/index.js",
