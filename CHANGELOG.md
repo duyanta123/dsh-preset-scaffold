@@ -2,6 +2,9 @@
 
 本文件记录 dsh-preset-scaffold 的重要变更。
 
+## [Unreleased]
+- 移除 `package.json` 的 `private: true`，开放 npm 发布（无测试套件，发布前按清单真机验证）
+
 ## [0.1.2] - 2026-09-02
 - `package.json` 补充 `repository` / `bugs` / `homepage` 元数据
 - README 徽章统一（license / DSH / dsh-index / version）
