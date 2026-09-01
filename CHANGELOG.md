@@ -2,6 +2,10 @@
 
 本文件记录 dsh-preset-scaffold 的重要变更。
 
+## [0.1.2] - 2026-09-02
+- `package.json` 补充 `repository` / `bugs` / `homepage` 元数据
+- README 徽章统一（license / DSH / dsh-index / version）
+
 ## [0.1.1] - 2026-08-15
 - 新增插件 bundle 形态：`dsh plugin --profile web add github:duyanta123/dsh-preset-scaffold` 一键安装（package.json + cordis.patch.yml + plugin/index.js），skills 经官方 `FileSystemSkillProvider` 注册，可入 dsh-index 生态
 - preset.yml 描述对齐实际六套模板，补充英文描述；README 安装节补充插件安装方式

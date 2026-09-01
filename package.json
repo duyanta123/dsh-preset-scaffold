@@ -1,6 +1,6 @@
 {
   "name": "dsh-preset-scaffold",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "DSH (DeepSeek Harness) scaffold plugin & preset: strict 5-phase init runbook, engineering standards, and six runnable starter templates (node-ts / react-vite / python / go / spring-boot / monorepo). 项目初始化脚手架预设：严格流程 + 工程规范 + 六套模板。",
   "license": "MIT",
   "type": "module",

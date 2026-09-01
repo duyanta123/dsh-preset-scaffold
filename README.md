@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-preset-4c1d95)](https://github.com/topics/dsh-plugin)
 [![dsh-index](https://img.shields.io/badge/dsh--index-dsh--preset--scaffold-blue)](https://dsh-index.xlings.org/packages/dsh-preset-scaffold/)
-[![version](https://img.shields.io/badge/version-0.1.1-green)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-0.1.2-green)](CHANGELOG.md)
 
 一个面向「从零搭建项目骨架」的 DeepSeek Harness（DSH）Agent 预设：内置架构师人设、严格初始化流程、分技术栈模板资产与工程化规范。
 
