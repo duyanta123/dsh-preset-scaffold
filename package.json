@@ -12,6 +12,10 @@
     "url": "https://github.com/duyanta123/dsh-preset-scaffold/issues"
   },
   "homepage": "https://github.com/duyanta123/dsh-preset-scaffold#readme",
+  "scripts": {
+    "test": "node --test test/manifest-template.test.mjs",
+    "test:compat": "node test/dsh-compat.test.mjs"
+  },
   "main": "./plugin/index.js",
   "exports": {
     ".": "./plugin/index.js",

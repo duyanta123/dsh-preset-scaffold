@@ -26,6 +26,13 @@ dsh plugin --profile web add github:duyanta123/dsh-preset-scaffold
 
 安装后新建会话即可用；模板资产随包分发，`scaffold-templates` 技能可直接读取。
 
+当前兼容性门禁固定使用可安装的 `@deepseek-ai/dsh@0.1.2-rc.1`；上游 `dsh-v0.1.3-alpha.1` 已在 GitHub 发布但尚未进入 npm，本项目暂不把该 alpha 作为安装基线。
+
+### 环境要求
+
+- 模板生成脚本和独立工具：按各模板自身的 Node / Python / Go / Java 要求验证。
+- DSH 0.1.2-rc.1 宿主：Node.js >= 22.12。
+
 ### 方式二：作为完整预设安装（含架构师人设）
 
 预设 = 一个目录，安装即复制，**无需改任何宿主配置**：

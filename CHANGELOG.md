@@ -3,7 +3,10 @@
 本文件记录 dsh-preset-scaffold 的重要变更。
 
 ## [Unreleased]
-- 移除 `package.json` 的 `private: true`，开放 npm 发布（无测试套件，发布前按清单真机验证）
+- 新增包级 manifest/template smoke test，覆盖 bundle 声明、技能 frontmatter、六套模板关键文件、版本元数据及 `files` 白名单。
+- 新增固定 `@deepseek-ai/dsh@0.1.2-rc.1` 的 `npm run test:compat` 门禁及 Windows/Ubuntu Node 22.12 CI。
+- 技能说明对齐实际模板：React 19 + Vite 8、Java 25 + Spring Boot 4.0。
+- 移除 `package.json` 的 `private: true`，开放 npm 发布；包级测试之外仍保留模板生成与最小运行真机验证。
 
 ## [0.1.2] - 2026-09-02
 - `package.json` 补充 `repository` / `bugs` / `homepage` 元数据

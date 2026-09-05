@@ -11,10 +11,10 @@ description: 本预设自带的分技术栈 starter 模板目录与用法。生�
 | 目录 | 技术栈 | 入口 | 验证命令 |
 |---|---|---|---|
 | `templates/node-ts` | TypeScript + Node HTTP 服务 | `src/index.ts` | `pnpm dev` / `pnpm build && pnpm start` |
-| `templates/react-vite` | React 18 + TypeScript + Vite | `src/main.tsx` | `pnpm dev` / `pnpm build` |
+| `templates/react-vite` | React 19 + TypeScript + Vite 8 | `src/main.tsx` | `pnpm dev` / `pnpm build` |
 | `templates/python` | Python 3.11+ FastAPI | `src/app/main.py` | `pip install -e . && uvicorn app.main:app --reload` |
 | `templates/go` | Go 1.22+ net/http | `cmd/server/main.go` | `go run ./cmd/server` |
-| `templates/spring-boot` | Java 21 + Spring Boot 3.4（Maven） | `Application.java` | `mvn spring-boot:run` |
+| `templates/spring-boot` | Java 25 + Spring Boot 4.0（Maven） | `Application.java` | `mvn spring-boot:run` |
 | `templates/monorepo` | pnpm workspace 结构 | `pnpm-workspace.yaml` | 与 node-ts / react-vite 组合使用 |
 
 ## 使用步骤
