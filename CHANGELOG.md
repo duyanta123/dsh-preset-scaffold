@@ -3,6 +3,9 @@
 本文件记录 dsh-preset-scaffold 的重要变更。
 
 ## [Unreleased]
+
+## [0.1.3] - 2026-09-06
+
 - 新增包级 manifest/template smoke test，覆盖 bundle 声明、技能 frontmatter、六套模板关键文件、版本元数据及 `files` 白名单。
 - 新增固定 `@deepseek-ai/dsh@0.1.2-rc.1` 的 `npm run test:compat` 门禁及 Windows/Ubuntu Node 22.19 CI。
 - 技能说明对齐实际模板：React 19 + Vite 8、Java 25 + Spring Boot 4.0。

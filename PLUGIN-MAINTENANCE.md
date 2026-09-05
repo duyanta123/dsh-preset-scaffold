@@ -8,7 +8,7 @@
 | 项 | 值 |
 |---|---|
 | 类型 | 模板型（项目初始化脚手架预设） |
-| 当前版本 | 0.1.2 |
+| 当前版本 | 0.1.3 |
 | 分发状态 | dsh-index / awesome-dsh-plugin / awesome-deepseek-harness 已收录 |
 | 运行时 | 零构建 ESM，`plugin/index.js` 由 harness 加载 |
 | 验收方式 | **包级自动化 + 真机验证**——`npm test` 检查 manifest/template，模板生成项目后再跑通最小测试 |
