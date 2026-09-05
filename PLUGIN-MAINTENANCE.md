@@ -34,7 +34,7 @@ dsh-preset-scaffold/
 ## 3. CI 与测试门禁
 
 - **包级结构门禁**：`npm test` 检查 manifest、patch、技能 frontmatter、六套模板入口/config 和 `files` 白名单；不强制在包级测试安装模板生态依赖。
-- **DSH 宿主兼容**：`npm run test:compat` 固定 `@deepseek-ai/dsh@0.1.2-rc.1`，要求 Node >=22.12，执行临时 profile 的 add、dump-config 和有限时长启动。
+- **DSH 宿主兼容**：`npm run test:compat` 固定 `@deepseek-ai/dsh@0.1.2-rc.1`，要求 Node >=22.19，执行临时 profile 的 add、dump-config 和有限时长启动。
 - **GitHub Actions**：仓库级 CI 执行 `npm test`、`npm run test:compat` 和 `npm pack --dry-run`。
 - **硬门槛**：任何模板改动后，必须用该模板真机生成项目并跑通最小测试，方可提交/发布。
 

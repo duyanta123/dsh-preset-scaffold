@@ -31,7 +31,7 @@ dsh plugin --profile web add github:duyanta123/dsh-preset-scaffold
 ### 环境要求
 
 - 模板生成脚本和独立工具：按各模板自身的 Node / Python / Go / Java 要求验证。
-- DSH 0.1.2-rc.1 宿主：Node.js >= 22.12。
+- DSH 0.1.2-rc.1 宿主：Node.js >= 22.19。
 
 ### 方式二：作为完整预设安装（含架构师人设）
 
