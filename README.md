@@ -1,70 +1,113 @@
-# dsh-preset-scaffold · 项目初始化脚手架预设
+# dsh-preset-scaffold · Project Init Scaffold Preset
+
+English | [简体中文](README.zh-CN.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-preset-4c1d95)](https://github.com/topics/dsh-plugin)
+[![CI](https://github.com/duyanta123/dsh-preset-scaffold/actions/workflows/ci.yml/badge.svg)](https://github.com/duyanta123/dsh-preset-scaffold/actions/workflows/ci.yml)
 [![dsh-index](https://img.shields.io/badge/dsh--index-dsh--preset--scaffold-blue)](https://dsh-index.xlings.org/packages/dsh-preset-scaffold/)
-[![version](https://img.shields.io/badge/version-0.1.3-green)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-0.1.4-green)](CHANGELOG.md)
 
-一个面向「从零搭建项目骨架」的 DeepSeek Harness（DSH）Agent 预设：内置架构师人设、严格初始化流程、分技术栈模板资产与工程化规范。
+A DeepSeek Harness (DSH) agent preset for "bootstrapping a project skeleton from scratch": ships an architect persona, a strict init runbook, per-stack template assets, and engineering standards.
 
-## 功能
+Two installation shapes are supported: a **DSH plugin** (four engineering skills registered with the package) or a **full preset** (which additionally includes the architect persona and toolset configuration). The npm package name and GitHub repository name are both `dsh-preset-scaffold`.
 
-- **人设（persona）**：项目架构师——决策规则、工具映射、输出契约、硬性约束
-- **工具集**：文件读写、pwsh/bash、后台作业、skills、计划模式、workflow、子代理、goal、todo、ask-user、web 搜索
-- **模板资产 `templates/`**：node-ts、react-vite、python(FastAPI)、go、spring-boot、monorepo 六套 starter
-- **技能 `skills/`**：scaffold-runbook（严格流程）、scaffold-templates（模板用法）、project-structure-best-practices（目录规范）、engineering-configuration-standard（配置规范）
+## Positioning
 
-## 安装（DSH 用户）
+dsh-preset-scaffold covers the "requirement description → runnable project skeleton" step: confirm requirements first, propose a plan (plan mode), and only generate / install dependencies / launch-verify after approval. It does not handle later feature development, nor does it replace your team's own scaffolding standards — templates and standards are both meant to be extended.
 
-### 方式一：作为插件安装（推荐，可入 dsh-index 生态）
+It answers:
+- How should a new project start (directory structure, config files, engineering standards)?
+- What do the six mainstream-stack starters look like, and how to pick one?
+- How is the init flow kept from drifting (strict five phases + hard gates)?
 
-四个工程化 skills（runbook / 模板 / 结构 / 配置规范）随包注册，人设与工具沿用宿主 profile（web / standard 已覆盖 runbook 引用的全部工具）：
+## Installation
+
+### Option 1: as a DSH plugin (recommended, dsh-index ecosystem compatible)
+
+The four engineering skills (runbook / templates / structure / config standards) register with the package; persona and tools come from the host profile (web / standard already cover every tool the runbook references):
 
 ```powershell
-dsh plugin --profile web add github:duyanta123/dsh-preset-scaffold
+dsh plugin --profile web add "github:duyanta123/dsh-preset-scaffold#v0.1.4"
 ```
 
-安装后新建会话即可用；模板资产随包分发，`scaffold-templates` 技能可直接读取。
-
-当前兼容性门禁固定使用可安装的 `@deepseek-ai/dsh@0.1.5-rc.2`。
-
-### 环境要求
-
-- 模板生成脚本和独立工具：按各模板自身的 Node / Python / Go / Java 要求验证。
-- DSH 0.1.5-rc.2 宿主：Node.js >= 22.19。
-
-### 方式二：作为完整预设安装（含架构师人设）
-
-预设 = 一个目录，安装即复制，**无需改任何宿主配置**：
+Or from npm:
 
 ```powershell
-# 1. 克隆本仓库
+npm install dsh-preset-scaffold
+```
+
+A new session is enough after install; template assets ship with the package and the `scaffold-templates` skill reads them directly.
+
+### Option 2: as a full preset (includes the architect persona)
+
+A preset is just a directory — install by copying, **no host config changes needed**. One-click on Windows:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
+Or manual copy:
+
+```powershell
+# 1. Clone this repository
 git clone https://github.com/duyanta123/dsh-preset-scaffold.git
-# 2. 复制到 DSH 的用户预设根目录
+# 2. Copy it into DSH's user preset root
 Copy-Item -Recurse .\dsh-preset-scaffold "$env:USERPROFILE\.dsh\.agent-presets\scaffold"
-# 3. 新建会话，预设选择「项目初始化脚手架」
+# 3. Start a new session and pick the "Project Init Scaffold" preset
 ```
 
-> 卸载 = 删除 `$HOME/.dsh/.agent-presets/scaffold` 目录。
+> Uninstall = delete the `$HOME/.dsh/.agent-presets/scaffold` directory.
 
-## 使用
+### Requirements
 
-1. 新建会话，预设选择「项目初始化脚手架」。
-2. 用一句话描述项目（技术栈、类型、依赖）。
-3. Agent 会先确认需求 → 出方案（计划模式）→ 经批准后生成 → 安装依赖 → 启动验证 → 汇报命令与目录树。
+- Template generation scripts and standalone tools: verified per each template's own Node / Python / Go / Java requirements.
+- DSH 0.1.5-rc.2 host: Node.js >= 22.19 (the compatibility gate pins the installable `@deepseek-ai/dsh@0.1.5-rc.2`; verify with `npm run test:compat`).
 
-## 开发与贡献
+## Quick Start
 
-- 本仓库是**源**；`$HOME/.dsh/.agent-presets/scaffold` 是**已安装副本**。改动仓库后需同步过去才生效：
+1. Start a new session and pick the "Project Init Scaffold" preset (full preset shape); or just state your requirements in a session with the plugin installed (plugin shape).
+2. Describe the project in one sentence (stack, type, dependencies).
+3. The agent confirms requirements → proposes a plan (plan mode) → generates after approval → installs dependencies → launch-verifies → reports commands and the directory tree.
 
-  ```powershell
-  Copy-Item -Recurse .\dsh-preset-scaffold "$env:USERPROFILE\.dsh\.agent-presets\scaffold" -Force
-  ```
+## Templates & Skills
 
-- 加模板：新建 `templates/<stack>/` 放入完整可运行文件，并在 `skills/scaffold-templates/SKILL.md` 登记一行。
-- 加技能：新建 `skills/<name>/SKILL.md`，YAML frontmatter 需含 `name` 与 `description`。
-- 加/减能力：编辑 `agent.cordis.yml` 的插件行（参考内置 `standard` 预设）。
-- 校验：用 `agentPresets.standingKeyFor('scaffold')` 做挂载校验；改完建议新建会话实跑一遍。
+**Template assets `templates/` (six runnable starters)**:
+
+| Template | Stack |
+| --- | --- |
+| `node-ts` | Node.js + TypeScript |
+| `react-vite` | React + Vite |
+| `python` | Python + FastAPI |
+| `go` | Go |
+| `spring-boot` | Spring Boot |
+| `monorepo` | Monorepo workspace |
+
+**Skills `skills/` (four)**:
+
+| Skill | Responsibility |
+| --- | --- |
+| `scaffold-runbook` | Strict five-phase init runbook |
+| `scaffold-templates` | Template inventory and usage |
+| `project-structure-best-practices` | Directory structure standards |
+| `engineering-configuration-standard` | Engineering configuration standards |
+
+Under the plugin shape, persona and tools come from the host profile; the full preset shape additionally enables the architect persona and toolset declared in `agent.cordis.yml` (file read/write, pwsh/bash, background jobs, skills, plan mode, workflow, subagents, goal, todo, ask-user, web search).
+
+## Development & Contributing
+
+- This repository is the **source**; `$HOME/.dsh/.agent-presets/scaffold` is an **installed copy**. Changes to the repo must be synced over to take effect (`install.ps1` or manual `Copy-Item -Force`).
+- Add a template: create `templates/<stack>/` with a complete runnable project, and register one line in `skills/scaffold-templates/SKILL.md`.
+- Add a skill: create `skills/<name>/SKILL.md`; the YAML frontmatter needs `name` and `description`.
+- Add/remove capabilities: edit the plugin rows in `agent.cordis.yml` (see the built-in `standard` preset).
+- Verify: use `agentPresets.standingKeyFor('scaffold')` for mount verification; run a real session afterwards.
+
+## Documentation
+
+- [skills/scaffold-runbook/SKILL.md](skills/scaffold-runbook/SKILL.md) — the strict five-phase init runbook
+- [templates/](templates/) — the six starter templates
+- [CHANGELOG.md](CHANGELOG.md) — release notes
+- [PLUGIN-MAINTENANCE.md](PLUGIN-MAINTENANCE.md) — repo maintenance runbook
 
 ## License
 

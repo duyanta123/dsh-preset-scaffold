@@ -1,6 +1,6 @@
 # dsh-preset-scaffold 维护规则（Maintenance Runbook）
 
-> 本文档是 dsh-preset-scaffold 仓库的专属维护基准，与顶层 [PLUGIN-MAINTENANCE.md](../../docs/PLUGIN-MAINTENANCE.md) 通用规则配套使用。本文件聚焦本仓库的细节。
+> 本文档是 dsh-preset-scaffold 仓库的专属维护基准，与工作区顶层 docs/PLUGIN-MAINTENANCE.md 通用规则配套使用（该文件位于本仓库之外）。本文件聚焦本仓库的细节。
 > 原则：**不改不动，要改就一步到位**——代码/技能、测试、CHANGELOG、版本号、tag 一起改，不留下半成品版本。
 
 ## 1. 仓库概况
@@ -8,7 +8,7 @@
 | 项 | 值 |
 |---|---|
 | 类型 | 模板型（项目初始化脚手架预设） |
-| 当前版本 | 0.1.3 |
+| 当前版本 | 0.1.4 |
 | 分发状态 | dsh-index / awesome-dsh-plugin / awesome-deepseek-harness 已收录 |
 | 运行时 | 零构建 ESM，`plugin/index.js` 由 harness 加载 |
 | 验收方式 | **包级自动化 + 真机验证**——`npm test` 检查 manifest/template，模板生成项目后再跑通最小测试 |
@@ -66,7 +66,7 @@ dsh-preset-scaffold/
 ## 6. 技能与预设维护
 
 - `skills/*/SKILL.md` 与 `preset.yml` / `agent.cordis.yml` / `cordis.patch.yml` 描述需保持一致。
-- 若改动对外描述，同步：`README.md` 首段、`package.json` 的 `description`/`keywords`、awesome-dsh-plugin 的 `data/plugins/duyanta123__dsh-preset-scaffold.yml`。
+- 若改动对外描述，同步：`README.md` / `README.zh-CN.md` 首段（双语，结构一致）、`package.json` 的 `description`/`keywords`、awesome-dsh-plugin 的 `data/plugins/duyanta123__dsh-preset-scaffold.yml`；发版时同步双语 README 的 version 徽章与安装示例 tag。
 - `packages` 安装形态与 `agent.cordis.yml` 独立预设形态并存——改动 runbook 时两处人设/工具声明都要核对，避免宿主 profile 与独立预设行为漂移。
 
 ## 7. 版本与发布节奏
@@ -80,6 +80,7 @@ dsh-preset-scaffold/
 - [ ] 涉及模板的改动已推送，各模板自带 CI 全绿
 - [ ] `CHANGELOG.md` 已归并 `Unreleased`
 - [ ] `package.json` `version` 与 tag 一致
+- [ ] 双语 README 的 version 徽章与安装示例 tag 已同步
 - [ ] `files` 字段包含所有应发布文件（`templates/`、`skills/`、`preset.yml`、`agent.cordis.yml`、`install.ps1` 等）
 - [ ] 包级 manifest/template smoke test 与 DSH compat smoke test 通过
 - [ ] 对外描述若变，列表条目已同步（或已提交 PR）

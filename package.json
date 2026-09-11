@@ -35,6 +35,7 @@
     "agent.cordis.yml",
     "install.ps1",
     "README.md",
+    "README.zh-CN.md",
     "CHANGELOG.md",
     "LICENSE"
   ],
